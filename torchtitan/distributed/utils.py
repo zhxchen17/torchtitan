@@ -191,6 +191,8 @@ def set_determinism(
     # As long as we are not in the 1-D (PP-only) case, we will have a seed to use for all ranks of the SPMD mesh.
     # IF PP is also used, this seed is unique per PP rank.
     if duplicate_seed_meshes:
+        # We only need to pass one submesh as DTensor manual_seed uses that to verify
+        # if the current rank is actually in the submesh.
         torch.distributed.tensor._random.manual_seed(seed, duplicate_seed_meshes[0])
 
 
